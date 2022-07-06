@@ -8,7 +8,10 @@ v2022.06
 Ref: Paz, M. (1991). Structural Dynamics. Springer, Boston, MA. https://doi.org/10.1007/978-1-4684-9907-0_9.
 
 
-### MATRIZ DE MASA [M]
+''''
+
+```
+% MATRIZ DE MASA [M]
 M=zeros(N,N);
 for i=1:N %piso
     for j=1:N %columna
@@ -18,3 +21,4 @@ for i=1:N %piso
     end  
 end  
 M
+```
