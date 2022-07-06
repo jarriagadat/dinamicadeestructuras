@@ -1,0 +1,131 @@
+ANÁLISIS MODAL 
+EDIFICIO TIPO CORTE DE VARIOS PISOS
+Autor: Jorge Arriagada, Universida de Valparaíso
+Version: v2022.06
+
+
+Ref: Paz, M. (1991). Structural Dynamics. Springer, Boston, MA. https://doi.org/10.1007/978-1-4684-9907-0_9.
+Table of Contents
+ANÁLISIS MODAL 
+EDIFICIO TIPO CORTE DE VARIOS PISOS
+    PROPIEDADES DEL SISTEMA
+    MATRIZ DE MASA [M]
+    MATRIZ DE RIGIDEZ [K]
+    MARIZ DE AMORTIGUAMIENTO [C]
+    FRECUENCIAS DEL SISTEMA
+    CALCULO MODOS
+    RESPUESTA DEL SISTEMA
+        VIBRACIONES LIBRES
+        VIBRACIONES FORZADAS - FUERZA p(t)
+        VIBRACIONES FORZADAS - SISMO
+        RESPUESTA DE C/GDL POR MODO EN FORMA INDEPENDIENTE PARA UNA EXCITACION TIPO SISMO
+            Normalizando a phi gorrito
+    ECUACIONES MODALES
+        FACTOR DE PARTICIPACIÓN MODAL
+        DESPLAZAMIENTO D
+    Yi 
+    RESPUESTA DEL SISTEMA
+FORMATO
+clear
+clc
+format shortG
+PROPIEDADES DEL SISTEMA
+N = 5;         % Número de pisos
+pisonorm = 3;   % Normalizado al piso i
+
+m = 271;       % Masa kg
+Kc = 701;      % Rigidez N/m
+
+Propiedades con valores tipo
+% m=0.349;      %kg
+% Kc=0.11/2     %N/m
+% c= 50;        %N/m
+MATRIZ DE MASA [M]
+M=zeros(N,N);
+for i=1:N %piso
+    for j=1:N %columna
+        if i==j
+            M(i,j)=m;  
+        end
+    end  
+end  
+M
+MATRIZ DE RIGIDEZ [K]
+
+% Kstory=12*E*I/L^3
+
+%MATRIZ DE RIGIDEZ
+K=zeros(N,N);
+for i=1:N %piso
+    for j=1:N %columna
+        if i==N & j==N
+            K(i,j)=2*Kc;
+        elseif i==j
+            K(i,j)=4*Kc;  
+        elseif abs(i-j)==1
+            K(i,j)=-2*Kc;
+        else
+            K(i,j)=0;
+        end
+    end  
+end  
+K
+MARIZ DE AMORTIGUAMIENTO [C]
+% C=zeros(N,N);
+% for i=1:N %piso
+%     for j=1:N %columna
+%         if i==j
+%             C(i,j)=c;  
+%         end
+%     end  
+% end  
+% C
+FRECUENCIAS DEL SISTEMA
+[phi,w2] = eig(inv(M)*K);
+
+% normaliza al modo phi(i,i)
+% for i=1:N
+%     phi(:,i)=phi(:,i)/phi(i,i);
+% end
+
+% normaliza al modo phi(N,i)
+for i=1:N
+    phi(:,i)=phi(:,i)/phi(pisonorm,i);
+end
+w=sqrt(w2)
+phi
+CALCULO MODOS
+MODOS DE VIBRAR - REPRESENTACIÓN
+modo=zeros(N+1,N);
+for i=1:N
+modo(2:N+1,i)=phi(:,i);
+end
+modo;
+gdl=[0:N];
+
+tiledlayout(1,N)
+
+
+for i=1:N
+
+nexttile
+title(sprintf('Modo %.1 '),i)
+hold on
+l=line(modo(:,i),gdl);
+l.Color='r';
+l.LineJoin='round';
+scatter(modo(:,i),gdl)
+% axis tight
+ylim([0 N+1])
+yticks([0:N])
+tico=round(max(max(phi)));
+xlim([-(N+1) N+1])
+xticks([-tico:tico])
+box on
+grid on
+% legend    
+
+s=xline(0,'--');
+s.Color='black';
+hold off
+end
