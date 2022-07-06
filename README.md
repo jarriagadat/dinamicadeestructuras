@@ -45,3 +45,21 @@ for i=1:N %piso
 end  
 K
 ```
+
+
+```
+FRECUENCIAS DEL SISTEMA
+[phi,w2] = eig(inv(M)*K);
+
+% normaliza al modo phi(i,i)
+% for i=1:N
+%     phi(:,i)=phi(:,i)/phi(i,i);
+% end
+
+% normaliza al modo phi(N,i)
+for i=1:N
+    phi(:,i)=phi(:,i)/phi(pisonorm,i);
+end
+w=sqrt(w2)
+phi
+```
