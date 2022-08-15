@@ -1,5 +1,5 @@
 # Edificio Tipo Corte  
-Jorge Arriagada, Universida de Valparaíso
+Jorge Arriagada, Universidad de Valparaíso
 v2022.06
 
 
