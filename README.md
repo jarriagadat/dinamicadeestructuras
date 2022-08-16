@@ -8,10 +8,15 @@ v2022.06
 Ref: Paz, M. (1991). Structural Dynamics. Springer, Boston, MA. https://doi.org/10.1007/978-1-4684-9907-0_9.
 
 
-''''
-
+Estructura
 ```
+N = 5     % N pisos
+m = 100
+Kc = 1000
+```
+
 MATRIZ DE MASA [M]
+```
 M=zeros(N,N);
 for i=1:N %piso
     for j=1:N %columna
@@ -23,8 +28,8 @@ end
 M
 ```
 
+MATRIZ DE RIGIDEZ
 ```
-MATRIZ DE RIGIDEZ [K]
 % Rigidez columna tipo
 % Kpiso=12*E*I/L^3 
 
@@ -46,11 +51,21 @@ end
 K
 ```
 
+FRECUENCIAS DEL SISTEMA
 
 ```
-FRECUENCIAS DEL SISTEMA
-[phi,w2] = eig(inv(M)*K);
+% Matriz del sistema
+A = inv(M)*K
+% phi y w2 son matrices
+% la matriz phi son los eigenvectors (modos) y
+% la diagonal de la matriz w2 son los eigenvalues (frecuencias)
+[phi,w2] = eig(A)
 
+% Ordenar los eigen-values y eigen-vectors
+[w2_ord, ind] = sort(diag(w2),'ascend')
+phi_ord = phi(:,ind)
+
+pisonorm = 1
 % normaliza al modo phi(i,i)
 % for i=1:N
 %     phi(:,i)=phi(:,i)/phi(i,i);
@@ -58,8 +73,8 @@ FRECUENCIAS DEL SISTEMA
 
 % normaliza al modo phi(N,i)
 for i=1:N
-    phi(:,i)=phi(:,i)/phi(pisonorm,i);
+    phi(:,i)=phi_ord(:,i)/phi_ord(pisonorm,i);
 end
-w=sqrt(w2)
+w=sqrt(w2_ord)
 phi
 ```
