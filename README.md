@@ -65,7 +65,7 @@ A = inv(M)*K
 [w2, ind] = sort(diag(w2),'ascend')
 phi = phi(:,ind)
 
-pisonorm = 1
+pisonorm=5
 % normaliza al modo phi(i,i)
 % for i=1:N
 %     phi(:,i)=phi(:,i)/phi(i,i);
