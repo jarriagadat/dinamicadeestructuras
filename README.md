@@ -16,9 +16,10 @@ format shortG
 ```
 Estructura
 ```
-N = 5     % N pisos
-m = 100
-Kc = 1000
+% Número de pisos
+N=4
+%m = 100
+%Kc = 1000
 ```
 
 MATRIZ DE MASA [M]
