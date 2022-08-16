@@ -62,8 +62,8 @@ A = inv(M)*K
 [phi,w2] = eig(A)
 
 % Ordenar los eigen-values y eigen-vectors
-[w2_ord, ind] = sort(diag(w2),'ascend')
-phi_ord = phi(:,ind)
+[w2, ind] = sort(diag(w2),'ascend')
+phi = phi(:,ind)
 
 pisonorm = 1
 % normaliza al modo phi(i,i)
@@ -73,8 +73,8 @@ pisonorm = 1
 
 % normaliza al modo phi(N,i)
 for i=1:N
-    phi(:,i)=phi_ord(:,i)/phi_ord(pisonorm,i);
+    phi(:,i)=phi(:,i)/phi(pisonorm,i);
 end
-w=sqrt(w2_ord)
+w=sqrt(w2)
 phi
 ```
