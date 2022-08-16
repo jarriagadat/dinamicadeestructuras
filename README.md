@@ -7,7 +7,13 @@ v2022.06
 
 Ref: Paz, M. (1991). Structural Dynamics. Springer, Boston, MA. https://doi.org/10.1007/978-1-4684-9907-0_9.
 
-
+Formato
+```
+clear all
+close all
+clc
+format shortG
+```
 Estructura
 ```
 N = 5     % N pisos
@@ -31,7 +37,7 @@ M
 MATRIZ DE RIGIDEZ
 ```
 % Rigidez columna tipo
-% Kpiso=12*E*I/L^3 
+% Kc=12*E*I/L^3 
 
 % MATRIZ DE RIGIDEZ
 K=zeros(N,N);
